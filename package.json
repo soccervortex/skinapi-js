@@ -1,0 +1,38 @@
+{
+  "name": "skinapi-js",
+  "version": "0.1.0",
+  "description": "Tiny zero-dependency client for SkinAPI - CS2/Steam skin prices, float values, inventories and marketplace data.",
+  "type": "module",
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "files": ["src"],
+  "scripts": {
+    "example": "node examples/price.mjs"
+  },
+  "keywords": [
+    "cs2",
+    "csgo",
+    "steam",
+    "skins",
+    "skin-prices",
+    "float",
+    "inventory",
+    "marketplace",
+    "api",
+    "skinapi"
+  ],
+  "homepage": "https://skinapi.skinvaults.online/docs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soccervortex/skinapi-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/soccervortex/skinapi-js/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
