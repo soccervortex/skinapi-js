@@ -1,11 +1,15 @@
 {
   "name": "skinapi-js",
-  "version": "0.1.0",
-  "description": "Tiny zero-dependency client for SkinAPI - CS2/Steam skin prices, float values, inventories and marketplace data.",
+  "version": "0.2.0",
+  "description": "Zero-dependency client for SkinAPI - CS2/Steam skin prices, float values, inventories and marketplace data. Retries, timeouts, rate-limit tracking and TypeScript types.",
   "type": "module",
   "main": "src/index.mjs",
+  "types": "src/index.d.ts",
   "exports": {
-    ".": "./src/index.mjs"
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.mjs"
+    }
   },
   "files": ["src"],
   "scripts": {

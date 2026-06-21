@@ -60,13 +60,61 @@ try {
 | Method | Endpoint |
 | --- | --- |
 | `itemPrice(name, opts)` | `GET /items` |
+| `itemMeta(name)` | `GET /items/meta` |
+| `search(q, opts)` | `GET /items/search` |
+| `catalog(opts)` | `GET /catalog` |
+| `history(name, opts)` | `GET /history` |
 | `markets(name, opts)` | `GET /markets` |
+| `marketsBatch(names, opts)` | `POST /markets/batch` |
+| `deals(opts)` | `GET /deals` |
 | `float(inspectUrl)` | `GET /float` |
 | `floatLeaderboard(name, opts)` | `GET /float/leaderboard` |
 | `profile(idOrVanity)` | `GET /profile` |
+| `friendlist(steamId)` | `GET /friendlist` |
 | `inventory(steamId, opts)` | `GET /inventory` |
+| `inventoryHistory(steamId, opts)` | `GET /inventory/history` |
+| `inventoryBatch(steamIds, opts)` | `POST /inventory/batch` |
+| `tradeup(items)` | `POST /tradeup` |
+| `status()` | `GET /status` |
 
 Authentication uses the `x-api-key` header. Games: `cs2`, `dota2`, `rust`, `tf2`.
+
+## Batch & tools
+
+```js
+// Price many items in one call
+const many = await api.marketsBatch([
+  "AK-47 | Redline (Field-Tested)",
+  "AWP | Asiimov (Field-Tested)",
+], { game: "cs2" });
+
+// Trade-up calculator (exactly 10 inputs)
+const result = await api.tradeup([
+  { name: "...", float: 0.12 }, /* x10 */
+]);
+
+// Search + catalog
+const hits = await api.search("asiimov", { limit: 10 });
+const page = await api.catalog({ game: "cs2", limit: 50, sort: "price", prices: true });
+```
+
+## Advanced options
+
+```js
+const api = new SkinAPI("sk_live_...", {
+  timeoutMs: 10000,   // per-request timeout (default 15000)
+  maxRetries: 3,      // retries on 429/5xx/network with backoff (default 2)
+  baseUrl: "https://skinapi.skinvaults.online/api/v1",
+});
+
+await api.itemPrice("AK-47 | Redline (Field-Tested)");
+
+// Inspect your remaining quota after any call
+console.log(api.rateLimit); // { remainingMinute, remainingDay, reset }
+```
+
+The client automatically retries rate-limited (`429`) and server (`5xx`) responses with
+exponential backoff, honoring `Retry-After` / `X-RateLimit-Reset`.
 
 ## Links
 
